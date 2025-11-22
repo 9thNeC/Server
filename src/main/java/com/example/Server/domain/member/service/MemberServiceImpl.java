@@ -34,11 +34,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateNickname(String socialId, String newNickname) {
+    public UpdateNicknameResponseDto updateNickname(String socialId, String newNickname) {
         Member member = memberRepository.findBySocialId(socialId)
                 .orElseThrow(() -> new IllegalArgumentException("회원 없음"));
 
         member.updateNickname(newNickname);  // 엔티티 메서드 호출
+        memberRepository.save(member);
+
+        return new UpdateNicknameResponseDto(newNickname, "정상적으로 닉네임이 설정되었습니다.");
     }
 
 }

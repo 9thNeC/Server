@@ -8,8 +8,8 @@ public interface MemberService {
 
     Member getMemberBySocialId(String socialId);
 
-    Member createOauth(String socialId);
-    void updateNickname(String socialId, String nickname);
+    Member createOauth(String socialId, String email);
+    UpdateNicknameResponseDto updateNickname(String socialId, String nickname);
 
 }
 
