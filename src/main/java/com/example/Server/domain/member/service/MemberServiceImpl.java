@@ -1,8 +1,8 @@
-package com.example.Server.oauth.member.service;
+package com.example.Server.domain.member.service;
 
-import com.example.Server.oauth.member.domain.Member;
-import com.example.Server.oauth.member.domain.Role;
-import com.example.Server.oauth.member.repository.MemberRepository;
+import com.example.Server.domain.member.domain.Member;
+import com.example.Server.domain.member.domain.Role;
+import com.example.Server.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

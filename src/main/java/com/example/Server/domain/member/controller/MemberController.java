@@ -1,12 +1,12 @@
-package com.example.Server.oauth.member.controller;
+package com.example.Server.domain.member.controller;
 
-import com.example.Server.jwt.JwtTokenProvider;
-import com.example.Server.oauth.member.domain.Member;
-import com.example.Server.oauth.member.dto.AccessTokenDto;
-import com.example.Server.oauth.member.dto.KakaoProfileDto;
-import com.example.Server.oauth.member.dto.RedirectDto;
-import com.example.Server.oauth.member.service.KakaoService;
-import com.example.Server.oauth.member.service.MemberService;
+import com.example.Server.global.jwt.JwtTokenProvider;
+import com.example.Server.domain.member.domain.Member;
+import com.example.Server.domain.member.dto.AccessTokenDto;
+import com.example.Server.domain.member.dto.KakaoProfileDto;
+import com.example.Server.domain.member.dto.RedirectDto;
+import com.example.Server.domain.member.service.KakaoService;
+import com.example.Server.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

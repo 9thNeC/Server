@@ -1,9 +1,9 @@
-package com.example.Server.oauth.member.service;
+package com.example.Server.domain.member.service;
 
 import com.example.Server.global.common.error.exception.ErrorCode;
-import com.example.Server.oauth.common.exception.KakaoException;
-import com.example.Server.oauth.member.dto.AccessTokenDto;
-import com.example.Server.oauth.member.dto.KakaoProfileDto;
+import com.example.Server.global.oauth.common.exception.KakaoException;
+import com.example.Server.domain.member.dto.AccessTokenDto;
+import com.example.Server.domain.member.dto.KakaoProfileDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

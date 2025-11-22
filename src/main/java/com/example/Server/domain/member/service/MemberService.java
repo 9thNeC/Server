@@ -1,6 +1,6 @@
-package com.example.Server.oauth.member.service;
+package com.example.Server.domain.member.service;
 
-import com.example.Server.oauth.member.domain.Member;
+import com.example.Server.domain.member.domain.Member;
 
 public interface MemberService {
 
