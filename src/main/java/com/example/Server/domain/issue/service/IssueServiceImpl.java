@@ -29,8 +29,12 @@ public class IssueServiceImpl implements IssuesService{
 
         if(member == null)
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
-        if(member.getNickname().isEmpty())
+
+        String nickname = member.getNickname();
+        if (nickname == null || nickname.isEmpty()) {
             throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
+        }
+
 
         Issue issue = Issue.builder()
                 .member(member)
