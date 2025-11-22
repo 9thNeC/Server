@@ -2,6 +2,7 @@ package com.example.Server.domain.issue.controller;
 
 import com.example.Server.domain.challenge.dto.response.CreateChallengeResDto;
 import com.example.Server.domain.issue.dto.req.CreateIssueReqDto;
+import com.example.Server.domain.member.CustomUserDetails;
 import com.example.Server.global.common.error.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -61,6 +63,7 @@ public interface IssueControllerDocs {
             )
     })
     public ResponseEntity<CreateChallengeResDto> createIssue(
-            @RequestBody CreateIssueReqDto dto
+            @RequestBody CreateIssueReqDto dto,
+            @AuthenticationPrincipal CustomUserDetails user
     );
 }
