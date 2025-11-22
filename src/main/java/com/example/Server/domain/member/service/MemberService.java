@@ -1,6 +1,6 @@
-package com.example.Server.global.oauth.member.service;
+package com.example.Server.domain.member.service;
 
-import com.example.Server.global.oauth.member.domain.Member;
+import com.example.Server.domain.member.entity.Member;
 
 public interface MemberService {
 

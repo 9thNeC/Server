@@ -1,13 +1,13 @@
-package com.example.Server.global.oauth.member.controller;
+package com.example.Server.domain.member.controller;
 
 import com.example.Server.global.common.error.ErrorResponse;
 import com.example.Server.global.jwt.JwtTokenProvider;
-import com.example.Server.global.oauth.member.domain.Member;
-import com.example.Server.global.oauth.member.dto.AccessTokenDto;
-import com.example.Server.global.oauth.member.dto.KakaoProfileDto;
-import com.example.Server.global.oauth.member.dto.RedirectDto;
-import com.example.Server.global.oauth.member.service.KakaoService;
-import com.example.Server.global.oauth.member.service.MemberService;
+import com.example.Server.domain.member.entity.Member;
+import com.example.Server.domain.member.dto.AccessTokenDto;
+import com.example.Server.domain.member.dto.KakaoProfileDto;
+import com.example.Server.domain.member.dto.RedirectDto;
+import com.example.Server.domain.member.service.KakaoService;
+import com.example.Server.domain.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
