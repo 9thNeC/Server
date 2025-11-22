@@ -23,23 +23,23 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
 
     public ChallengeListResDto challengeList(String category) {
-        // 현재 사용자 조회 (현재 사용자의 챌린지만 조회)
         Member member = MemberUtil.getCurrentMember();
 
+        List<Challenge> challenges = null;
+        if(category == null) {
+            challenges = challengeRepository.findChallengesByMemberOrderByCreatedAtDesc(member.getId());
+        }
+
+        challenges = getChallenges(member, toCategory(category));
         List<ChallengeListItemDto> dtoList =
-                getChallenges(member, toCategory(category)).stream()
+                challenges.stream()
                         .map(ChallengeListItemDto::from)
                         .toList();
         return new ChallengeListResDto(member.getNickname(), dtoList);
     }
 
     public List<Challenge> getChallenges(Member member, Category category) {
-
-        if (category == null) {
-            return challengeRepository.findByMemberOrderByCreatedAtDesc(member);
-        }
-
-        return challengeRepository.findByMemberAndIssue_CategoryOrderByCreatedAtDesc(member, category);
+        return challengeRepository.findChallengesByMemberAndIssueCategory(member.getId(), category);
     }
 
     public static Category toCategory(String category) throws CustomException {
