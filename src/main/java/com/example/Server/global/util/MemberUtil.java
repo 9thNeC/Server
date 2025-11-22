@@ -6,9 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class MemberUtil {
-    public static Member getCurrentMember() {
 
-    public static Member getMember() {
+    public static Member getCurrentMember() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -24,3 +23,4 @@ public class MemberUtil {
         return null;
     }
 }
+
