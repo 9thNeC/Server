@@ -6,5 +6,5 @@ import com.example.Server.domain.member.entity.Member;
 
 public interface IssuesService {
 
-    CreateChallengeResDto createIssue(CreateIssueReqDto dto);
+    CreateChallengeResDto createIssue(CreateIssueReqDto dto, Member member);
 }

@@ -29,8 +29,9 @@ public class IssueController implements IssueControllerDocs{
             @RequestBody CreateIssueReqDto dto
     ) {
 
+        Member member = MemberUtil.getCurrentMember();
 
-        return ResponseEntity.ok(issuesService.createIssue(dto));
+        return ResponseEntity.ok(issuesService.createIssue(dto,member));
 
     }
 }

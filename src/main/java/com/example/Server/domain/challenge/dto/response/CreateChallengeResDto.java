@@ -10,5 +10,6 @@ public class CreateChallengeResDto {
     private String title;
     private String content;
     private String comfortContent;
+    private String nickName;
 
 }

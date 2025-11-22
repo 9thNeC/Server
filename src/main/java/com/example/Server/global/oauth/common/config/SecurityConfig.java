@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/issues/create","/member/kakao/**", "/swagger-ui/**", "/v3/api-docs/**","/test/health", "/s3/**").permitAll()
+                        .requestMatchers("/member/kakao/**", "/swagger-ui/**", "/v3/api-docs/**","/test/health", "/s3/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 //인증 관련 exception Handling

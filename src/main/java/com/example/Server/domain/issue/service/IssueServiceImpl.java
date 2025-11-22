@@ -30,10 +30,10 @@ public class IssueServiceImpl implements IssuesService{
 
     @Override
     @Transactional
-    public CreateChallengeResDto createIssue(CreateIssueReqDto dto) {
+    public CreateChallengeResDto createIssue(CreateIssueReqDto dto, Member member) {
 
-        Member member = memberRepository.findById(1L)
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Category category = Category.valueOf(dto.getCategory());
+
 
         if(member == null)
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
@@ -42,13 +42,13 @@ public class IssueServiceImpl implements IssuesService{
         if (nickname == null || nickname.isEmpty())
             throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
 
-        if (!Category.contains(dto.getCategory()))
+        if (!Category.contains(category))
             throw new CustomException(ErrorCode.INVALID_CATEGORY);
 
         Issue issue = Issue.builder()
                 .member(member)
                 .content(dto.getContent())
-                .category(dto.getCategory())
+                .category(category)
                 .build();
 
         issueRepository.save(issue);
@@ -74,6 +74,7 @@ public class IssueServiceImpl implements IssuesService{
                 .title(title)
                 .content(content)
                 .comfortContent(comfort)
+                .nickName(nickname)
                 .build();
     }
 }

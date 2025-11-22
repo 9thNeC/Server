@@ -10,6 +10,6 @@ import lombok.Getter;
 @Builder
 public class CreateIssueReqDto {
     private String content;
-    private Category category;
+    private String category;
 
 }
