@@ -1,6 +1,6 @@
 package com.example.Server.domain.issue.dto.req;
 
-import com.example.Server.domain.issue.enums.Category;
+import com.example.Server.global.type.Category;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CreateIssueReqDto {
-
     private String content;
     private Category category;
 

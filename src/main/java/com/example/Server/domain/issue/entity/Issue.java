@@ -1,8 +1,8 @@
 package com.example.Server.domain.issue.entity;
 
 import com.example.Server.domain.challenge.entity.Challenge;
-import com.example.Server.domain.issue.enums.Category;
 import com.example.Server.domain.member.entity.Member;
+import com.example.Server.global.type.Category;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,8 +35,10 @@ public class Issue {
     @ManyToOne
     Member member;
 
+/*
     @OneToMany(mappedBy = "issue")
     private List<Challenge> challenges = new ArrayList<>();
+*/
 
 }
 

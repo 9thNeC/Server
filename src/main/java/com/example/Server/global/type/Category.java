@@ -9,6 +9,4 @@ public enum Category {
     RELATION,   // 관계
     FINANCE,    // 경제
     ETC         //  기타
-
-
 }

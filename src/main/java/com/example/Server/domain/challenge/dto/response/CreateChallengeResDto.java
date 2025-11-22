@@ -1,4 +1,4 @@
-package com.example.Server.domain.challenge.dto.res;
+package com.example.Server.domain.challenge.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
