@@ -3,6 +3,7 @@ package com.example.Server.global.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,12 +33,12 @@ public class JwtTokenProvider {
     /**
      * JWT 토큰 생성
      */
-    public String createToken(String email, String role) {
+    public String createToken(String socialId, String role) {
         Date now = new Date();
-        Date validity = new Date(now.getTime() + expiration);
+        Date validity = new Date(now.getTime() + expiration * 60 * 1000L);
 
         return Jwts.builder()
-                .setSubject(email) // 토큰 주체 (이메일)
+                .setSubject(socialId)  // socialId를 주체로 변경
                 .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(validity)
@@ -51,6 +52,20 @@ public class JwtTokenProvider {
     public String getEmail(String token) {
         return parseClaims(token).getSubject();
     }
+
+    /**
+     * 토큰에서 socialId 가져오기
+     */
+    public String getSocialId(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject(); // sub 값!
+    }
+
+
 
     /**
      * 토큰에서 role 가져오기
@@ -84,4 +99,15 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7); // "Bearer " 제거
+        }
+
+        return null;
+    }
+
 }
