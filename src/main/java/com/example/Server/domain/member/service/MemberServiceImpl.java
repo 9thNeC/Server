@@ -24,10 +24,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member createOauth(String socialId, String email) {
+    public Member createOauth(String socialId) {
         Member newMember = Member.builder()
                 .socialId(socialId)
-                .email(email)
                 .role(Role.USER)
                 .build();
 
