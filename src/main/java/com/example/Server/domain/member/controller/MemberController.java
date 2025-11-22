@@ -2,6 +2,7 @@ package com.example.Server.domain.member.controller;
 
 import com.example.Server.domain.member.CustomUserDetails;
 import com.example.Server.domain.member.dto.*;
+import com.example.Server.domain.member.dto.response.MyInfoResDto;
 import com.example.Server.global.common.error.ErrorResponse;
 import com.example.Server.global.jwt.JwtTokenProvider;
 import com.example.Server.domain.member.entity.Member;
@@ -71,7 +72,7 @@ public class MemberController {
         // 회원가입이 되어 있지 않다면 회원가입
         Member originalMember = memberService.getMemberBySocialId(kakaoProfileDto.getId()); // kakaoProfileDto의 정보 중 sub를 통해서 db에 회원이 있는지 확인
         if(originalMember == null) { // Oauth를 통해서 회원가입할 겨우 openid, email, 소셜타입을 넘겨준다.
-            originalMember = memberService.createOauth(kakaoProfileDto.getId(), kakaoProfileDto.getKakao_account().getProfile().getNickname()); // kakao oauth 회원가입
+            originalMember = memberService.createOauth(kakaoProfileDto.getId()); // kakao oauth 회원가입
         }
 
         // 회원가입돼 있는 회원이라면 토큰 발급(SocialId 기반)
@@ -84,12 +85,11 @@ public class MemberController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails
+    public MyInfoResDto getMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails
 ) {
-            return ResponseEntity.ok(MemberUtil.getCurrentMember());
+        Member currentMember = MemberUtil.getCurrentMember();
+        return new MyInfoResDto(currentMember.getId(), currentMember.getSocialId());
         }
-
-
 
 
     /*@PatchMapping("/nickname")

@@ -9,19 +9,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final MemberRepository memberRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -31,22 +30,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = resolveToken(request);
 
-        try {
-            if (token != null && jwtTokenProvider.validateToken(token)) {
+        if (token != null && jwtTokenProvider.validateToken(token)) {
 
-                String email = jwtTokenProvider.getEmail(token);
-                String role = jwtTokenProvider.getRole(token);
+            String socialId = jwtTokenProvider.getSocialId(token);
+
+            Member member = memberRepository.findBySocialId(socialId)
+                    .orElse(null);
+
+            if (member != null) {
+                CustomUserDetails userDetails = new CustomUserDetails(member);
 
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
-                                email, null,
-                                Collections.singleton(new SimpleGrantedAuthority(role))
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
                         );
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-        } catch (Exception e) {
-            SecurityContextHolder.clearContext();
+
         }
 
         filterChain.doFilter(request, response);
@@ -60,4 +63,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 }
+
+
 
