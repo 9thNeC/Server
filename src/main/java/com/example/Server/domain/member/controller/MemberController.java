@@ -89,17 +89,25 @@ public class MemberController {
             return ResponseEntity.ok(MemberUtil.getCurrentMember());
         }
 
+    @PatchMapping("/nickname")
+    public ResponseEntity<UpdateNicknameResponseDto> updateNickname(
+            @RequestBody NicknameRequestDto request) {
 
+        Member member = MemberUtil.getCurrentMember();
 
+        if (member == null) {
+            return ResponseEntity.status(401).build();
+        }
 
-    /*@PatchMapping("/nickname")
-    public ResponseEntity<?> updateNickname(
-            @RequestBody NicknameRequestDto dto
-    ) {
-        member.updateNickname(dto.getNickname());
-        return ResponseEntity.ok("닉네임 변경 완료!");
+        UpdateNicknameResponseDto response = memberService.updateNickname(
+                member.getSocialId(),
+                request.getNickname()
+        );
+
+        return ResponseEntity.ok(response);
     }
-    */
+
+
 
 
 

@@ -9,7 +9,7 @@ public interface MemberService {
     Member getMemberBySocialId(String socialId);
 
     Member createOauth(String socialId, String email);
-    void updateNickname(String socialId, String nickname);
+    UpdateNicknameResponseDto updateNickname(String socialId, String nickname);
 
 }
 
