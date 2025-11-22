@@ -39,7 +39,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Docker 이미지 생성
-        run: docker build -t neordinary -f Dockerfile-prod .
+        run: docker build --platform linux/amd64 -t neordinary -f Dockerfile-prod .
+
 
       - name: Docker 이미지에 Tag 붙이기
         run: docker tag neordinary 529088301566.dkr.ecr.ap-northeast-2.amazonaws.com/neordinary:latest
