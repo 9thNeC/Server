@@ -60,6 +60,7 @@ public class MemberController {
                     content = @Content(schema = @Schema())
             )
     })
+
     @PostMapping("/kakao/doLogin")
     public ResponseEntity<?> kakaoLogin(@RequestBody RedirectDto redirectDto) {
         // accesstoken 발급
