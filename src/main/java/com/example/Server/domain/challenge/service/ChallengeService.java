@@ -3,6 +3,7 @@ package com.example.Server.domain.challenge.service;
 import com.example.Server.domain.challenge.dto.response.ChallengeListItemDto;
 import com.example.Server.domain.challenge.dto.response.ChallengeListResDto;
 import com.example.Server.domain.challenge.dto.response.DetailChallengeResDto;
+import com.example.Server.domain.challenge.dto.response.DetailChallengeWithIssueResDto;
 import com.example.Server.domain.challenge.entity.Challenge;
 import com.example.Server.domain.challenge.repository.ChallengeRepository;
 import com.example.Server.domain.member.entity.Member;
@@ -55,9 +56,22 @@ public class ChallengeService {
     public DetailChallengeResDto detailChallenge(Long challengeId) {
         // 챌린지 사용자 권한 검증 로직 (추가하기)
 
-        Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() ->
-                new CustomException(ErrorCode.NOT_EXIST_CHALLENGE));
-
+        Challenge challenge = getChallenge(challengeId);
         return new DetailChallengeResDto(challenge.getId(), challenge.getIssue().getCategory().toString(), challenge.getImageUrl(), challenge.getComfortContent());
+    }
+
+    public DetailChallengeWithIssueResDto detailChallengeWithIssue(Long challengeId) {
+        // 챌린지 사용자 권한 검증 로직 (추가하기)
+        Member member = null;
+
+        Challenge challenge = getChallenge(challengeId);
+
+        // 닉네임 부분 수정하기
+        return new DetailChallengeWithIssueResDto(challenge.getId(), "nickname", challenge.getCreatedAt(), challenge.getIssue().getContent(), challenge.getComfortContent(), challenge.getTitle(), challenge.getContent());
+    }
+
+    private Challenge getChallenge(Long challengeId) {
+        return challengeRepository.findById(challengeId).orElseThrow(() ->
+                new CustomException(ErrorCode.NOT_EXIST_CHALLENGE));
     }
 }

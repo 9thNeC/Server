@@ -2,6 +2,7 @@ package com.example.Server.domain.challenge.controller;
 
 import com.example.Server.domain.challenge.dto.response.ChallengeListResDto;
 import com.example.Server.domain.challenge.dto.response.DetailChallengeResDto;
+import com.example.Server.domain.challenge.dto.response.DetailChallengeWithIssueResDto;
 import com.example.Server.domain.challenge.service.ChallengeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -75,5 +76,12 @@ public class ChallengeController {
         return challengeService.detailChallenge(challengeId);
     }
 
+    @GetMapping("/{challengeId}/issue")
+    public DetailChallengeWithIssueResDto detailChallengeWithIssue(
+            @Parameter(description = "조회할 챌린지 ID", example = "12")
+            @PathVariable("challengeId") Long challengeId
+    ) {
+        return challengeService.detailChallengeWithIssue(challengeId);
+    }
 
 }
