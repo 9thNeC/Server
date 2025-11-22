@@ -60,7 +60,7 @@ public class ChallengeService {
     }
 
     private void verifyMember(Member currentMember, Challenge challenge) {
-        if(!Objects.equals(currentMember, challenge.getMember())) {
+        if(!Objects.equals(currentMember.getId(), challenge.getMember().getId())) {
             throw new CustomException(ErrorCode.NOT_AUTHORIZED_CHALLENGE);
         }
     }
