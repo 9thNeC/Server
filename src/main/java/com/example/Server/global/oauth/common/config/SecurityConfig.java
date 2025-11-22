@@ -35,7 +35,7 @@ public class SecurityConfig {
 
                 // --- 모든 요청 허용 ---
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/member/kakao/**", "/swagger-ui/**", "/v3/api-docs/**","/test/health").permitAll()
+                        .requestMatchers("/member/kakao/**", "/swagger-ui/**", "/v3/api-docs/**","/test/health", "/s3/**").permitAll()
                         .anyRequest().authenticated() // 이거 중요
                 )
 
