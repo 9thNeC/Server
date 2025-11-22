@@ -18,7 +18,6 @@ public class KakaoProfileDto {
     @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class KakaoAccount {
-        private String email;
         private Profile profile;
     }
 

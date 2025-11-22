@@ -1,10 +1,12 @@
 package com.example.Server.global.util;
 
+import com.example.Server.domain.member.CustomUserDetails;
 import com.example.Server.domain.member.entity.Member;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class MemberUtil {
+    public static Member getCurrentMember() {
 
     public static Member getMember() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -15,9 +17,8 @@ public class MemberUtil {
 
         Object principal = authentication.getPrincipal();
 
-        // principal이 Member 객체라면 반환
-        if (principal instanceof Member member) {
-            return member;
+        if (principal instanceof CustomUserDetails customUserDetails) {
+            return customUserDetails.getMember();
         }
 
         return null;
