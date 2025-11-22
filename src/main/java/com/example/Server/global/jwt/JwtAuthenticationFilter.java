@@ -22,6 +22,7 @@ import java.util.Collections;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final MemberRepository memberRepository;  // 추가
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -34,13 +35,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             if (token != null && jwtTokenProvider.validateToken(token)) {
 
-                String email = jwtTokenProvider.getEmail(token);
-                String role = jwtTokenProvider.getRole(token);
+                String socialId = jwtTokenProvider.getSocialId(token);
+
+                Member member = memberRepository.findBySocialId(socialId)
+                        .orElseThrow(() -> new RuntimeException("Member not found"));
+
+                CustomUserDetails userDetails = new CustomUserDetails(member);
 
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
-                                email, null,
-                                Collections.singleton(new SimpleGrantedAuthority(role))
+                                userDetails, null, userDetails.getAuthorities()
                         );
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
