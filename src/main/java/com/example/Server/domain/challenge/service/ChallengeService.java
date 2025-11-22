@@ -8,11 +8,13 @@ import com.example.Server.domain.member.entity.Member;
 import com.example.Server.global.common.error.exception.CustomException;
 import com.example.Server.global.common.error.exception.ErrorCode;
 import com.example.Server.global.type.Category;
+import com.example.Server.global.util.MemberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -22,12 +24,13 @@ public class ChallengeService {
 
     public ChallengeListResDto challengeList(String category) {
         // 현재 사용자 조회 (현재 사용자의 챌린지만 조회)
-        Member member = null;
+        Member member = MemberUtil.getCurrentMember();
+
         List<ChallengeListItemDto> dtoList =
                 getChallenges(member, toCategory(category)).stream()
-                        .map(ChallengeListItemDto::from)   // 여기!
+                        .map(ChallengeListItemDto::from)
                         .toList();
-        return new ChallengeListResDto("닉네임", dtoList);
+        return new ChallengeListResDto(member.getNickname(), dtoList);
     }
 
     public List<Challenge> getChallenges(Member member, Category category) {
@@ -52,20 +55,24 @@ public class ChallengeService {
     }
 
     public DetailChallengeResDto detailChallenge(Long challengeId) {
-        // 챌린지 사용자 권한 검증 로직 (추가하기)
-
         Challenge challenge = getChallenge(challengeId);
+        verifyMember(MemberUtil.getCurrentMember(), challenge);
         return new DetailChallengeResDto(challenge.getId(), challenge.getIssue().getCategory().toString(), challenge.getImageUrl(), challenge.getComfortContent());
     }
 
+    private void verifyMember(Member currentMember, Challenge challenge) {
+        if(!Objects.equals(currentMember, challenge.getMember())) {
+            throw new CustomException(ErrorCode.NOT_AUTHORIZED_CHALLENGE);
+        }
+    }
+
     public DetailChallengeWithIssueResDto detailChallengeWithIssue(Long challengeId) {
-        // 챌린지 사용자 권한 검증 로직 (추가하기)
-        Member member = null;
+        Member member = MemberUtil.getCurrentMember();
 
         Challenge challenge = getChallenge(challengeId);
+        verifyMember(member, challenge);
 
-        // 닉네임 부분 수정하기
-        return new DetailChallengeWithIssueResDto(challenge.getId(), "nickname", challenge.getCreatedAt(), challenge.getIssue().getContent(), challenge.getComfortContent(), challenge.getTitle(), challenge.getContent());
+        return new DetailChallengeWithIssueResDto(challenge.getId(), member.getNickname(), challenge.getCreatedAt(), challenge.getIssue().getContent(), challenge.getComfortContent(), challenge.getTitle(), challenge.getContent());
     }
 
     private Challenge getChallenge(Long challengeId) {
@@ -74,9 +81,9 @@ public class ChallengeService {
     }
 
     public ChallengeVerificationResDto challengeVerification(Long challengeId, ChallengeVerificationReqDto reqDto) {
-        // 챌린지 사용자 권한 검증 로직 (추가하기)
 
         Challenge challenge = getChallenge(challengeId);
+        verifyMember(MemberUtil.getCurrentMember(), challenge);
         challenge.update(reqDto.getImageUrl());
 
         return new ChallengeVerificationResDto(challenge.getId(), challenge.getImageUrl(), "챌린지가 성공적으로 인증되었습니다.");
