@@ -30,6 +30,7 @@ public class Issue {
     @CreationTimestamp
     private LocalDateTime createAt;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @ManyToOne

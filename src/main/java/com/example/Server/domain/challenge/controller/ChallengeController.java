@@ -31,7 +31,7 @@ public class ChallengeController {
                     description = "필터링할 카테고리 (없으면 전체 조회). 예: STUDY, JOB, FAMILY",
                     schema = @Schema(type = "string")
             )
-            @RequestParam(defaultValue = "null") String category) {
+            @RequestParam(required = false) String category) {
         return challengeService.challengeList(category);
     }
 

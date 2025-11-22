@@ -51,6 +51,7 @@ public class IssueServiceImpl implements IssuesService{
                 .comfortContent(content)
                 .title(title)
                 .content(comfort)
+                .member(member)
                 .build();
 
         challengeRepository.save(challenge);
