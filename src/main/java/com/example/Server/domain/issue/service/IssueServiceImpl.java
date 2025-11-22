@@ -10,9 +10,12 @@ import com.example.Server.domain.issue.repository.IssueRepository;
 import com.example.Server.domain.member.entity.Member;
 import com.example.Server.global.common.error.exception.CustomException;
 import com.example.Server.global.common.error.exception.ErrorCode;
+import com.example.Server.global.type.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
 
 
 @Service
@@ -31,9 +34,12 @@ public class IssueServiceImpl implements IssuesService{
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
 
         String nickname = member.getNickname();
-        if (nickname == null || nickname.isEmpty()) {
+        if (nickname == null || nickname.isEmpty())
             throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
-        }
+
+        if (Arrays.stream(Category.values())
+                .anyMatch(v -> v.equals(dto.getCategory())))
+            throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
 
 
         Issue issue = Issue.builder()
