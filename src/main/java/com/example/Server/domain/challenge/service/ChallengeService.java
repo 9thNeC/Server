@@ -2,6 +2,7 @@ package com.example.Server.domain.challenge.service;
 
 import com.example.Server.domain.challenge.dto.response.ChallengeListItemDto;
 import com.example.Server.domain.challenge.dto.response.ChallengeListResDto;
+import com.example.Server.domain.challenge.dto.response.DetailChallengeResDto;
 import com.example.Server.domain.challenge.entity.Challenge;
 import com.example.Server.domain.challenge.repository.ChallengeRepository;
 import com.example.Server.domain.member.entity.Member;
@@ -51,4 +52,12 @@ public class ChallengeService {
         }
     }
 
+    public DetailChallengeResDto detailChallenge(Long challengeId) {
+        // 챌린지 사용자 권한 검증 로직 (추가하기)
+
+        Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() ->
+                new CustomException(ErrorCode.NOT_EXIST_CHALLENGE));
+
+        return new DetailChallengeResDto(challenge.getId(), challenge.getIssue().getCategory().toString(), challenge.getImageUrl(), challenge.getComfortContent());
+    }
 }
