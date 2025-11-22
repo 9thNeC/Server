@@ -19,7 +19,7 @@ jobs:
           java-version: 17
 
       - name: application.yml 파일 만들기
-        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
+        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application-prod.yml
 
       - name: gradlew에 실행 권한 부여
         run: chmod +x ./gradlew
@@ -39,8 +39,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Docker 이미지 생성
-        run: docker build --platform linux/amd64 -t neordinary -f Dockerfile-prod .
-
+        run: docker build -t neordinary .
 
       - name: Docker 이미지에 Tag 붙이기
         run: docker tag neordinary 529088301566.dkr.ecr.ap-northeast-2.amazonaws.com/neordinary:latest
@@ -58,6 +57,7 @@ jobs:
           script: |
             docker stop neordinary || true
             docker rm neordinary || true
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 529088301566.dkr.ecr.ap-northeast-2.amazonaws.com
             docker pull 529088301566.dkr.ecr.ap-northeast-2.amazonaws.com/neordinary:latest
             docker run -d \
               --name neordinary \
