@@ -1,5 +1,6 @@
 package com.example.Server.domain.challenge.entity;
 
+import com.example.Server.domain.issue.entity.Issue;
 import com.example.Server.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
