@@ -1,6 +1,6 @@
 package com.example.Server.domain.issue.service;
 
-import com.example.Server.domain.challenge.dto.res.CreateChallengeResDto;
+import com.example.Server.domain.challenge.dto.response.CreateChallengeResDto;
 import com.example.Server.domain.challenge.entity.Challenge;
 import com.example.Server.domain.challenge.repository.ChallengeRepository;
 import com.example.Server.domain.issue.dto.req.CreateIssueReqDto;
