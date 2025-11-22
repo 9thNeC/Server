@@ -21,15 +21,7 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @Operation(
-            summary = "챌린지 목록 조회",
-            description = """
-        회원의 챌린지 목록을 조회합니다.  
-        category 값이 없으면 전체 챌린지를 반환하며,  
-        category 값이 유효한 경우 해당 카테고리의 챌린지만 필터링하여 반환합니다.
-        
-        사용 가능한 category 값:
-        STUDY, JOB, FAMILY, CAREER, HEALTH, RELATION, FINANCE, ETC
-    """
+            summary = "챌린지 목록 조회"
     )
     @GetMapping
     public ChallengeListResDto challengeList(
@@ -44,12 +36,7 @@ public class ChallengeController {
     @Tag(name = "Challenge API", description = "챌린지 관련 API")
     @GetMapping("/{challengeId}")
     @Operation(
-            summary = "챌린지 상세조회",
-            description = """
-        특정 챌린지의 상세 정보를 조회합니다.
-        challengeId가 정상적으로 존재해야 하며,
-        존재하지 않거나 접근 권한이 없는 경우 예외가 발생합니다.
-    """
+            summary = "챌린지 상세조회"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -76,7 +63,29 @@ public class ChallengeController {
         return challengeService.detailChallenge(challengeId);
     }
 
+    @Tag(name = "Challenge API", description = "챌린지 관련 API")
     @GetMapping("/{challengeId}/issue")
+    @Operation(
+            summary = "챌린지 + 고민 상세조회"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "챌린지 및 Issue 상세 조회 성공",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = DetailChallengeWithIssueResDto.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "존재하지 않는 챌린지 ID"
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "권한이 없는 사용자 접근"
+            )
+    })
     public DetailChallengeWithIssueResDto detailChallengeWithIssue(
             @Parameter(description = "조회할 챌린지 ID", example = "12")
             @PathVariable("challengeId") Long challengeId
