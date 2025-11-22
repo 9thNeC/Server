@@ -27,19 +27,28 @@ public class Challenge {
 
     private String content;
 
+    @Builder.Default
+    private boolean status = false; // 성공 여부
+
     @Column(name = "image_url", length = 500)
     private String imageUrl;
-
-    @Column(name = "create_at", updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createAt;
 
     @Column(name = "comfort_content", length = 1000)
     private String comfortContent;
 
-//    @ManyToOne
-//    Member member;
+    @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne
     Issue issue;
+
+    public void update(String imageUrl) {
+        this.imageUrl = imageUrl;
+        this.status = true;
+    }
 }
