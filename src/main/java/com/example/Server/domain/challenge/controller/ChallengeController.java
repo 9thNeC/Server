@@ -1,6 +1,8 @@
 package com.example.Server.domain.challenge.controller;
 
+import com.example.Server.domain.challenge.dto.request.ChallengeVerificationReqDto;
 import com.example.Server.domain.challenge.dto.response.ChallengeListResDto;
+import com.example.Server.domain.challenge.dto.response.ChallengeVerificationResDto;
 import com.example.Server.domain.challenge.dto.response.DetailChallengeResDto;
 import com.example.Server.domain.challenge.dto.response.DetailChallengeWithIssueResDto;
 import com.example.Server.domain.challenge.service.ChallengeService;
@@ -92,5 +94,42 @@ public class ChallengeController {
     ) {
         return challengeService.detailChallengeWithIssue(challengeId);
     }
+
+    @PatchMapping("/{challengeId}/verification")
+    @Operation(
+            summary = "챌린지 인증 처리"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "챌린지 인증 처리 성공",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ChallengeVerificationResDto.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "존재하지 않는 챌린지"
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "해당 챌린지에 대한 권한 없음"
+            )
+    })
+    public ChallengeVerificationResDto challengeVerification(
+            @Parameter(description = "인증할 챌린지 ID", example = "12")
+            @PathVariable("challengeId") Long challengeId,
+
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "챌린지 인증 요청 데이터",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = ChallengeVerificationReqDto.class))
+            )
+            @RequestBody ChallengeVerificationReqDto reqDto
+    ) {
+        return challengeService.challengeVerification(challengeId, reqDto);
+    }
+
 
 }

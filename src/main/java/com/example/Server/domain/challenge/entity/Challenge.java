@@ -26,7 +26,8 @@ public class Challenge {
 
     private String content;
 
-    private boolean status; // 성공 여부
+    @Builder.Default
+    private boolean status = false; // 성공 여부
 
     @Column(name = "image_url", length = 500)
     private String imageUrl;
@@ -44,4 +45,9 @@ public class Challenge {
 
     @ManyToOne
     Issue issue;
+
+    public void update(String imageUrl) {
+        this.imageUrl = imageUrl;
+        this.status = true;
+    }
 }
