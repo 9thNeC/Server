@@ -58,7 +58,7 @@ public class JwtTokenProvider {
      */
     public String getSocialId(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+                .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
