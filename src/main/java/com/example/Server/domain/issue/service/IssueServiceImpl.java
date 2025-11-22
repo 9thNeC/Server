@@ -37,10 +37,8 @@ public class IssueServiceImpl implements IssuesService{
         if (nickname == null || nickname.isEmpty())
             throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
 
-        if (Arrays.stream(Category.values())
-                .anyMatch(v -> v.equals(dto.getCategory())))
+        if (Category.contains(dto.getCategory()))
             throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
-
 
         Issue issue = Issue.builder()
                 .member(member)
