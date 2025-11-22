@@ -1,4 +1,4 @@
-package com.example.Server.global.oauth.member.domain;
+package com.example.Server.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,6 +16,8 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String nickname; //직접 입력받음.
 
     private String socialId;   // 카카오 sub 값
 
