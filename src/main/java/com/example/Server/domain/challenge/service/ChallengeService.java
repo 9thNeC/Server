@@ -27,19 +27,18 @@ public class ChallengeService {
 
         List<Challenge> challenges = null;
         if(category == null) {
+            System.out.println("category값이 null일 때");
             challenges = challengeRepository.findChallengesByMemberOrderByCreatedAtDesc(member.getId());
+        } else {
+            System.out.println("category값이 null x");
+            challenges = challengeRepository.findChallengesByMemberAndIssueCategory(member.getId(), toCategory(category));
         }
 
-        challenges = getChallenges(member, toCategory(category));
         List<ChallengeListItemDto> dtoList =
                 challenges.stream()
                         .map(ChallengeListItemDto::from)
                         .toList();
         return new ChallengeListResDto(member.getNickname(), dtoList);
-    }
-
-    public List<Challenge> getChallenges(Member member, Category category) {
-        return challengeRepository.findChallengesByMemberAndIssueCategory(member.getId(), category);
     }
 
     public static Category toCategory(String category) throws CustomException {
