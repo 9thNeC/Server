@@ -32,6 +32,7 @@ public class TestController {
         return new TestResponseDto("테스트에 성공하였습니다!");
     }
 
+
     @Operation(
             summary = "에러 테스트 API",
             description = "CustomException 발생 여부를 테스트하는 API"

@@ -1,6 +1,6 @@
-package com.example.Server.oauth.member.repository;
+package com.example.Server.global.oauth.member.repository;
 
-import com.example.Server.oauth.member.domain.Member;
+import com.example.Server.global.oauth.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

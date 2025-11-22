@@ -1,4 +1,4 @@
-package com.example.Server.oauth.member.domain;
+package com.example.Server.global.oauth.member.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

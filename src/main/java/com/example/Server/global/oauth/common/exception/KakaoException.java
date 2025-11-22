@@ -1,4 +1,4 @@
-package com.example.Server.oauth.common.exception;
+package com.example.Server.global.oauth.common.exception;
 
 import com.example.Server.global.common.error.exception.CustomException;
 import com.example.Server.global.common.error.exception.ErrorCode;
