@@ -40,6 +40,11 @@ public class SecurityConfig {
                         .requestMatchers("/member/kakao/**", "/swagger-ui/**", "/v3/api-docs/**","/test/health", "/s3/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                //인증 관련 exception Handling
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
+                )
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
