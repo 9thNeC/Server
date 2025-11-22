@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -18,8 +19,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // MEMBER.role = "USER" 형태로 들어있다고 가정
-        return List.of(new SimpleGrantedAuthority("ROLE_" + member.getRole()));
+        return Collections.singleton(new SimpleGrantedAuthority(member.getRole().toString()));
     }
 
     @Override

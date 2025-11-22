@@ -8,7 +8,7 @@ public interface MemberService {
 
     Member getMemberBySocialId(String socialId);
 
-    Member createOauth(String socialId, String email);
+    Member createOauth(String socialId);
     void updateNickname(String socialId, String nickname);
 
 }
