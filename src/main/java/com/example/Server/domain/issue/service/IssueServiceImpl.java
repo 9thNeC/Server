@@ -23,10 +23,7 @@ public class IssueServiceImpl implements IssuesService{
     private final AiResponseService aiResponseService;
 
     @Override
-    public CreateChallengeResDto createIssue(CreateIssueReqDto dto) {
-
-        Member member = memberRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Member not found"));
+    public CreateChallengeResDto createIssue(CreateIssueReqDto dto, Member member) {
 
 
         Issue issue = Issue.builder()

@@ -4,6 +4,8 @@ import com.example.Server.domain.challenge.dto.response.ChallengeVerificationRes
 import com.example.Server.domain.challenge.dto.response.CreateChallengeResDto;
 import com.example.Server.domain.issue.dto.req.CreateIssueReqDto;
 import com.example.Server.domain.issue.service.IssuesService;
+import com.example.Server.domain.member.entity.Member;
+import com.example.Server.global.util.MemberUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,7 +27,9 @@ public class IssueController implements IssueControllerDocs{
             @RequestBody CreateIssueReqDto dto
             ) {
 
-        return ResponseEntity.ok(issuesService.createIssue(dto));
+        Member member = MemberUtil.getCurrentMember();
+
+        return ResponseEntity.ok(issuesService.createIssue(dto,member));
 
     }
 }
