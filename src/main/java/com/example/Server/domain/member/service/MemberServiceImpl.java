@@ -1,7 +1,7 @@
 package com.example.Server.domain.member.service;
 
-import com.example.Server.domain.member.domain.Member;
-import com.example.Server.domain.member.domain.Role;
+import com.example.Server.domain.member.entity.Member;
+import com.example.Server.domain.member.entity.Role;
 import com.example.Server.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
