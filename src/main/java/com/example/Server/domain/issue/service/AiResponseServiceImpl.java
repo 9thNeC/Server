@@ -1,7 +1,7 @@
 package com.example.Server.domain.issue.service;
 
 import com.example.Server.domain.issue.dto.res.OpenAiResponse;
-import com.example.Server.domain.issue.exception.AiResponseException;
+import com.example.Server.global.common.error.exception.CustomException;
 import com.example.Server.global.common.error.exception.ErrorCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,7 +64,7 @@ public class AiResponseServiceImpl implements AiResponseService {
         OpenAiResponse openAiResponse = response.getBody();
 
         if(openAiResponse == null || openAiResponse.getChoices() == null || openAiResponse.getChoices().isEmpty()) {
-            throw new AiResponseException(ErrorCode.AI_RESPONSE_FAILED);
+            throw new CustomException(ErrorCode.AI_RESPONSE_FAILED);
         }
 
         String content = openAiResponse.getChoices().get(0).getMessage().getContent();
@@ -72,11 +72,11 @@ public class AiResponseServiceImpl implements AiResponseService {
         try {
             AiResponseResDto aiResponse = objectMapper.readValue(content, AiResponseResDto.class);
             if(aiResponse == null) {
-                throw new AiResponseException(ErrorCode.AI_RESPONSE_FAILED);
+                throw new CustomException(ErrorCode.AI_RESPONSE_FAILED);
             }
             return aiResponse;
         } catch (JsonProcessingException e) {
-            throw new AiResponseException(ErrorCode.AI_RESPONSE_FAILED, e);
+            throw new CustomException(ErrorCode.AI_RESPONSE_FAILED);
         }
 
     }
