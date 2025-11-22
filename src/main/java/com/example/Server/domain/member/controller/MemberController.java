@@ -85,12 +85,24 @@ public class MemberController {
     }
 
     @GetMapping("/me")
+    @Operation(
+            summary = "내 정보 조회",
+            description = "인증 정보를 기반으로 현재 로그인한 사용자의 정보를 조회합니다."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공적으로 사용자 정보를 반환함"),
+            @ApiResponse(responseCode = "401", description = "인증 정보가 없거나 토큰이 유효하지 않음")
+    })
     public ResponseEntity<?> getMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails
 ) {
             return ResponseEntity.ok(MemberUtil.getCurrentMember());
         }
 
     @PatchMapping("/nickname")
+    @Operation(
+            summary = "닉네임 변경",
+            description = "현재 로그인한 사용자의 닉네임을 수정합니다."
+    )
     public ResponseEntity<UpdateNicknameResponseDto> updateNickname(
             @RequestBody NicknameRequestDto request) {
 
