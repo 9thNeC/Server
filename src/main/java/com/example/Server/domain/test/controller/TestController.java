@@ -29,7 +29,7 @@ public class TestController {
     })
     @GetMapping("/health")
     public TestResponseDto healthCheck() {
-        return new TestResponseDto("테스트에 성공하였습니다!");
+        return new TestResponseDto("테스트에 성공하였습니다~");
     }
 
 
