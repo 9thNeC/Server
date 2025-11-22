@@ -1,4 +1,4 @@
-package com.example.Server.oauth.member.dto;
+package com.example.Server.global.oauth.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
