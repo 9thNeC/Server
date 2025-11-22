@@ -63,7 +63,6 @@ public interface IssueControllerDocs {
             )
     })
     public ResponseEntity<CreateChallengeResDto> createIssue(
-            @RequestBody CreateIssueReqDto dto,
-            @AuthenticationPrincipal CustomUserDetails user
+            @RequestBody CreateIssueReqDto dto
     );
 }

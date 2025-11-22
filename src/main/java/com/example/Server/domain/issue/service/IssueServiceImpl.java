@@ -8,6 +8,7 @@ import com.example.Server.domain.issue.dto.res.AiResponseResDto;
 import com.example.Server.domain.issue.entity.Issue;
 import com.example.Server.domain.issue.repository.IssueRepository;
 import com.example.Server.domain.member.entity.Member;
+import com.example.Server.domain.member.repository.MemberRepository;
 import com.example.Server.global.common.error.exception.CustomException;
 import com.example.Server.global.common.error.exception.ErrorCode;
 import com.example.Server.global.type.Category;
@@ -25,10 +26,14 @@ public class IssueServiceImpl implements IssuesService{
     private final IssueRepository issueRepository;
     private final ChallengeRepository challengeRepository;
     private final AiResponseService aiResponseService;
+    private final MemberRepository memberRepository;
 
     @Override
     @Transactional
-    public CreateChallengeResDto createIssue(CreateIssueReqDto dto, Member member) {
+    public CreateChallengeResDto createIssue(CreateIssueReqDto dto) {
+
+        Member member = memberRepository.findById(1L)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         if(member == null)
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
@@ -37,8 +42,8 @@ public class IssueServiceImpl implements IssuesService{
         if (nickname == null || nickname.isEmpty())
             throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
 
-        if (Category.contains(dto.getCategory()))
-            throw new CustomException(ErrorCode.INVALID_NICKNAME_FORMAT);
+        if (!Category.contains(dto.getCategory()))
+            throw new CustomException(ErrorCode.INVALID_CATEGORY);
 
         Issue issue = Issue.builder()
                 .member(member)

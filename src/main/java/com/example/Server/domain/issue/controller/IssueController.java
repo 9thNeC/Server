@@ -26,13 +26,11 @@ public class IssueController implements IssueControllerDocs{
 
     @PostMapping("/create")
     public ResponseEntity<CreateChallengeResDto> createIssue(
-            @RequestBody CreateIssueReqDto dto,
-            @AuthenticationPrincipal CustomUserDetails user
+            @RequestBody CreateIssueReqDto dto
     ) {
 
-        Member member = user.getMember();
 
-        return ResponseEntity.ok(issuesService.createIssue(dto,member));
+        return ResponseEntity.ok(issuesService.createIssue(dto));
 
     }
 }
