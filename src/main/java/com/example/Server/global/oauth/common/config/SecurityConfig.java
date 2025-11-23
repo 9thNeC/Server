@@ -60,7 +60,7 @@ public class SecurityConfig {
                 "http://localhost:5173",
                 "http://172.20.10.5:5173",
                 "http://172.20.10.5:5173/",
-                "neordinary-front.vercel.app"
+                "https://neordinary-front.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
