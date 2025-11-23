@@ -35,7 +35,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     )
     List<Challenge> findChallengesByMemberAndIssueCategory(
             @Param("memberId") Long memberId,
-            @Param("category") Category category
+            @Param("category") String category
     );
 
 }

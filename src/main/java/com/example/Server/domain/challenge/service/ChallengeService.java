@@ -31,7 +31,7 @@ public class ChallengeService {
             challenges = challengeRepository.findChallengesByMemberOrderByCreatedAtDesc(member.getId());
         } else {
             System.out.println("category값이 null x");
-            challenges = challengeRepository.findChallengesByMemberAndIssueCategory(member.getId(), toCategory(category));
+            challenges = challengeRepository.findChallengesByMemberAndIssueCategory(member.getId(), toCategory(category).toString());
         }
 
         List<ChallengeListItemDto> dtoList =
@@ -47,7 +47,7 @@ public class ChallengeService {
         }
 
         try {
-            return Category.valueOf(category.toUpperCase());
+            return Category.valueOf(category);
         } catch (IllegalArgumentException e) {
             throw new CustomException(ErrorCode.INVALID_CATEGORY);
         }
